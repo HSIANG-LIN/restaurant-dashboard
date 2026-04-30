@@ -153,6 +153,15 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+  .restaurant-item .tag.gm-link {
+    background: rgba(76, 205, 196, 0.15);
+    color: #4ecdc4;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .restaurant-item .tag.gm-link:hover {
+    background: rgba(76, 205, 196, 0.3);
+  }
   .restaurant-item .date {
     position: absolute;
     top: 14px;
@@ -306,12 +315,15 @@ function addMarker(r, index) {
 
   const noteHtml = r.notes ? `<div class="popup-note">💬 ${r.notes}</div>` : '';
   const linkHtml = r.url ? `<a class="popup-link" href="${r.url}" target="_blank">🔗 查看原文</a>` : '';
+  const mapLink = r.lat && r.lng
+    ? `<a class="popup-link" href="https://www.google.com/maps/dir/?api=1&destination=${r.lat},${r.lng}" target="_blank" style="margin-left:10px">🗺️ Google 導航</a>`
+    : '';
 
   marker.bindPopup(`
     <div class="popup-name">${r.name}</div>
     <div class="popup-addr">📍 ${r.address || '地址未知'}</div>
     ${noteHtml}
-    ${linkHtml}
+    ${linkHtml}${mapLink}
   `);
 
   marker.on('click', () => {
@@ -340,6 +352,7 @@ function renderList(restaurants) {
       <div class="tags">
         ${r.notes ? `<span class="tag note">💬 ${r.notes}</span>` : ''}
         ${r.url ? `<span class="tag">🔗 連結</span>` : ''}
+        ${r.lat && r.lng ? `<a class="tag gm-link" href="https://www.google.com/maps/dir/?api=1&destination=${r.lat},${r.lng}" target="_blank" onclick="event.stopPropagation()">🗺️ 導航</a>` : ''}
       </div>
     </div>
   `).join('');
