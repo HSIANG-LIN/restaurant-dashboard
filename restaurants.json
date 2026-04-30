@@ -39,6 +39,76 @@
       "lng": 121.3051,
       "notes": "水餃專賣店，口味多樣、餡料紮實。可訂冷凍宅配。IG: @xyue.tw 電話:0980-270-006 營業:11:00-22:30",
       "added_at": "2026-04-30T09:18:00+08:00"
+    },
+    {
+      "id": "rest_1745970201",
+      "name": "蕭惜合 粿",
+      "url": "https://www.instagram.com/reel/DXoWh3gkluw/",
+      "address": "新北市雙溪區市場乙9攤",
+      "lat": 25.0334,
+      "lng": 121.8657,
+      "notes": "傳統粿店，雙溪市場內，鐵道小旅行 by littlenado",
+      "added_at": "2026-04-30T09:30:00+08:00"
+    },
+    {
+      "id": "rest_1745970202",
+      "name": "蘭香大飯店",
+      "url": "https://www.instagram.com/reel/DXoWh3gkluw/",
+      "address": "新北市雙溪區牡丹里153號",
+      "lat": 25.0585,
+      "lng": 121.8520,
+      "notes": "雙溪牡丹老字號餐廳，鐵道小旅行 by littlenado",
+      "added_at": "2026-04-30T09:30:00+08:00"
+    },
+    {
+      "id": "rest_1745970203",
+      "name": "林益和堂",
+      "url": "https://www.instagram.com/reel/DXoWh3gkluw/",
+      "address": "新北市雙溪區長安街3號",
+      "lat": 25.0351,
+      "lng": 121.8654,
+      "notes": "百年中藥行/漢方舖，雙溪老街歷史店家，鐵道小旅行 by littlenado",
+      "added_at": "2026-04-30T09:30:00+08:00"
+    },
+    {
+      "id": "rest_1745970204",
+      "name": "雙溪蔡冰",
+      "url": "https://www.instagram.com/reel/DXoWh3gkluw/",
+      "address": "新北市雙溪區太平路50號甲3",
+      "lat": 25.0357,
+      "lng": 121.8649,
+      "notes": "傳統剉冰店，雙溪在地老字號冰品，鐵道小旅行 by littlenado",
+      "added_at": "2026-04-30T09:30:00+08:00"
+    },
+    {
+      "id": "rest_1745970205",
+      "name": "阿堂飯包",
+      "url": "https://www.instagram.com/reel/DXoWh3gkluw/",
+      "address": "新北市雙溪區太平路12號",
+      "lat": 25.0357,
+      "lng": 121.8653,
+      "notes": "傳統飯包/便當店，鐵道小旅行 by littlenado",
+      "added_at": "2026-04-30T09:30:00+08:00"
+    },
+    {
+      "id": "rest_1745970206",
+      "name": "海山餅店",
+      "url": "https://www.instagram.com/reel/DXoWh3gkluw/",
+      "address": "新北市雙溪區中華路2號",
+      "lat": 25.0426,
+      "lng": 121.8676,
+      "notes": "傳統糕餅老店，雙溪知名伴手禮，鐵道小旅行 by littlenado",
+      "added_at": "2026-04-30T09:30:00+08:00"
+    },
+    {
+      "id": "rest_1745970207",
+      "name": "Jeff's Bakery",
+      "url": "https://www.instagram.com/reel/DXoWh3gkluw/",
+      "address": "新北市雙溪區中正路17號",
+      "lat": 25.0453,
+      "lng": 121.8636,
+      "notes": "西式烘焙麵包店，鐵道小旅行 by littlenado",
+      "added_at": "2026-04-30T09:30:00+08:00"
     }
   ]
 }
