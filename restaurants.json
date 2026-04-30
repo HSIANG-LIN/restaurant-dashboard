@@ -56,7 +56,7 @@
       "url": "https://www.instagram.com/reel/DXoWh3gkluw/",
       "address": "新北市雙溪區牡丹里153號",
       "lat": 25.0585,
-      "lng": 121.8520,
+      "lng": 121.852,
       "notes": "雙溪牡丹老字號餐廳，鐵道小旅行 by littlenado",
       "added_at": "2026-04-30T09:30:00+08:00"
     },
@@ -129,6 +129,16 @@
       "lng": 120.9599,
       "notes": "復古懷舊風小餐館，木質調裝潢。寵物友善、無接待6歲以下幼兒。IG:@wuyanggggg 停車:台溪停車場 by newnew.food",
       "added_at": "2026-04-30T09:50:00+08:00"
+    },
+    {
+      "id": "rest_1777564819",
+      "name": "波WAVE 鷹嘴豆泥屋 (WAVE Hummus House)",
+      "url": "https://www.instagram.com/reel/DWwLgKqkuf5/",
+      "address": "台北市信義區莊敬路178巷13號1樓",
+      "lat": 25.0333,
+      "lng": 121.5669,
+      "notes": "以色列鷹嘴豆泥專門店，信義總店近101/四四南村。by milktea_drink_it",
+      "added_at": "2026-04-30T16:20:00+08:00"
     }
   ]
 }
