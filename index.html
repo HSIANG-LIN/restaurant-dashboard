@@ -213,7 +213,7 @@
 <div class="header">
   <h1>🍽️ 我的美食地圖</h1>
   <div class="stats">
-    <span id="count">0</span> 間收藏 · 台北
+    <span id="count">0</span> 間收藏 · <span id="cities">—</span>
   </div>
 </div>
 
@@ -355,6 +355,17 @@ function formatDate(dateStr) {
   return `${d.getMonth()+1}/${d.getDate()}`;
 }
 
+function getCities(restaurants) {
+  const citySet = new Set();
+  for (const r of restaurants) {
+    const addr = r.address || '';
+    // Match first administrative region like 台北市, 新北市, 桃園市, 台中市, 宜蘭縣 etc.
+    const m = addr.match(/([臺台紐新桃苗中彰投雲嘉南高屏宜花東澎金連]..?[北市縣鄉鎮區])/);
+    if (m) citySet.add(m[1]);
+  }
+  return citySet.size > 0 ? [...citySet].join('、') : '—';
+}
+
 function loadData() {
   fetch(RESTAURANTS_URL)
     .then(res => res.json())
@@ -362,6 +373,7 @@ function loadData() {
       allRestaurants = data.restaurants || [];
       document.getElementById('count').textContent = allRestaurants.length;
       document.getElementById('list-count').textContent = allRestaurants.length;
+      document.getElementById('cities').textContent = getCities(allRestaurants);
 
       allRestaurants.forEach((r, i) => addMarker(r, i));
       renderList(allRestaurants);
