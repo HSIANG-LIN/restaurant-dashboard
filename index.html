@@ -378,8 +378,10 @@ function loadData() {
       allRestaurants.forEach((r, i) => addMarker(r, i));
       renderList(allRestaurants);
 
-      if (allRestaurants.length > 0 && allRestaurants[0].lat) {
-        map.setView([allRestaurants[0].lat, allRestaurants[0].lng], 14);
+      // Auto-fit map to show all pins
+      if (markers.length > 0) {
+        const group = L.featureGroup(markers.map(m => m.marker));
+        map.fitBounds(group.getBounds().pad(0.15));
       }
     })
     .catch(() => {
