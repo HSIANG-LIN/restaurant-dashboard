@@ -84,6 +84,25 @@
     border-color: #e94560;
   }
   .search-box input::placeholder { color: #666; }
+  .filter-bar {
+    padding: 8px 20px 12px;
+    border-bottom: 1px solid #1f1f3a;
+  }
+  .filter-bar select {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background: #0f0f23;
+    color: #e0e0e0;
+    font-size: 13px;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    appearance: auto;
+  }
+  .filter-bar select:focus { border-color: #e94560; }
+  .filter-bar select option { background: #1a1a2e; color: #e0e0e0; }
   .restaurant-list {
     flex: 1;
     overflow-y: auto;
@@ -225,7 +244,12 @@
       <span class="count-badge" id="list-count">0</span>
     </div>
     <div class="search-box">
-      <input type="text" id="search" placeholder="🔍 搜尋餐廳名稱或地址..." oninput="filterRestaurants()">
+      <input type="text" id="search" placeholder="🔍 搜尋餐廳名稱或地址..." oninput="applyFilters()">
+    </div>
+    <div class="filter-bar">
+      <select id="city-filter" onchange="applyFilters()">
+        <option value="">🏙️ 全部地區</option>
+      </select>
     </div>
     <div class="restaurant-list" id="restaurant-list"></div>
   </div>
@@ -339,15 +363,64 @@ function highlightItem(id) {
   }
 }
 
-function filterRestaurants() {
-  const q = document.getElementById('search').value.toLowerCase();
-  const filtered = q ? allRestaurants.filter(r =>
-    r.name.toLowerCase().includes(q) ||
-    (r.address && r.address.toLowerCase().includes(q)) ||
-    (r.notes && r.notes.toLowerCase().includes(q))
-  ) : allRestaurants;
-  renderList(filtered);
+function extractCity(addr) {
+  const m = (addr || '').match(/([臺台紐新桃苗中彰投雲嘉南高屏宜花東澎金連]..?[北市縣鄉鎮區])/);
+  return m ? m[1] : null;
 }
+
+function getCityList(restaurants) {
+  const set = new Set();
+  for (const r of restaurants) {
+    const c = extractCity(r.address);
+    if (c) set.add(c);
+  }
+  return [...set].sort();
+}
+
+function applyFilters() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const city = document.getElementById('city-filter').value;
+
+  // Filter restaurants
+  const filtered = allRestaurants.filter(r => {
+    // Text search
+    if (q && !r.name.toLowerCase().includes(q) &&
+        !(r.address && r.address.toLowerCase().includes(q)) &&
+        !(r.notes && r.notes.toLowerCase().includes(q))) return false;
+    // City filter
+    if (city && extractCity(r.address) !== city) return false;
+    return true;
+  });
+
+  renderList(filtered);
+
+  // Show/hide map markers
+  markers.forEach(({ marker, data }) => {
+    const match = filtered.some(f => f.id === data.id);
+    if (match) {
+      map.addLayer(marker);
+    } else {
+      map.removeLayer(marker);
+    }
+  });
+
+  // Update count badge
+  document.getElementById('list-count').textContent = filtered.length;
+
+  // Fit bounds to visible markers
+  const visible = markers.filter(m => map.hasLayer(m.marker));
+  if (visible.length > 0) {
+    const group = L.featureGroup(visible.map(m => m.marker));
+    map.fitBounds(group.getBounds().pad(0.15));
+  } else if (markers.length > 0) {
+    // No visible markers, show all
+    const group = L.featureGroup(markers.map(m => m.marker));
+    map.fitBounds(group.getBounds().pad(0.15));
+  }
+}
+
+// Legacy alias kept for compatibility
+const filterRestaurants = applyFilters;
 
 function formatDate(dateStr) {
   if (!dateStr) return '';
@@ -358,10 +431,8 @@ function formatDate(dateStr) {
 function getCities(restaurants) {
   const citySet = new Set();
   for (const r of restaurants) {
-    const addr = r.address || '';
-    // Match first administrative region like 台北市, 新北市, 桃園市, 台中市, 宜蘭縣 etc.
-    const m = addr.match(/([臺台紐新桃苗中彰投雲嘉南高屏宜花東澎金連]..?[北市縣鄉鎮區])/);
-    if (m) citySet.add(m[1]);
+    const c = extractCity(r.address);
+    if (c) citySet.add(c);
   }
   return citySet.size > 0 ? [...citySet].join('、') : '—';
 }
@@ -374,6 +445,15 @@ function loadData() {
       document.getElementById('count').textContent = allRestaurants.length;
       document.getElementById('list-count').textContent = allRestaurants.length;
       document.getElementById('cities').textContent = getCities(allRestaurants);
+
+      // Populate city filter dropdown
+      const citySelect = document.getElementById('city-filter');
+      getCityList(allRestaurants).forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c;
+        opt.textContent = c;
+        citySelect.appendChild(opt);
+      });
 
       allRestaurants.forEach((r, i) => addMarker(r, i));
       renderList(allRestaurants);
