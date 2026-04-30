@@ -315,9 +315,8 @@ function addMarker(r, index) {
 
   const noteHtml = r.notes ? `<div class="popup-note">💬 ${r.notes}</div>` : '';
   const linkHtml = r.url ? `<a class="popup-link" href="${r.url}" target="_blank">🔗 查看原文</a>` : '';
-  const mapLink = r.lat && r.lng
-    ? `<a class="popup-link" href="https://www.google.com/maps/dir/?api=1&destination=${r.lat},${r.lng}" target="_blank" style="margin-left:10px">🗺️ Google 導航</a>`
-    : '';
+  const gmQuery = encodeURIComponent(`${r.name} ${r.address || ''}`);
+  const mapLink = `<a class="popup-link" href="https://www.google.com/maps/search/?api=1&query=${gmQuery}" target="_blank" style="margin-left:10px">🗺️ Google 導航</a>`;
 
   marker.bindPopup(`
     <div class="popup-name">${r.name}</div>
@@ -352,7 +351,7 @@ function renderList(restaurants) {
       <div class="tags">
         ${r.notes ? `<span class="tag note">💬 ${r.notes}</span>` : ''}
         ${r.url ? `<span class="tag">🔗 連結</span>` : ''}
-        ${r.lat && r.lng ? `<a class="tag gm-link" href="https://www.google.com/maps/dir/?api=1&destination=${r.lat},${r.lng}" target="_blank" onclick="event.stopPropagation()">🗺️ 導航</a>` : ''}
+        ${r.lat && r.lng ? `<a class="tag gm-link" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.name + ' ' + (r.address || ''))}" target="_blank" onclick="event.stopPropagation()">🗺️ 導航</a>` : ''}
       </div>
     </div>
   `).join('');
